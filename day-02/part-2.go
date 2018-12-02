@@ -22,7 +22,6 @@ func part2() {
 	var wg sync.WaitGroup
 	wg.Add(len(listOfIDs) - 1)
 
-	var boxMatch string
 	for currentIndex, boxID := range listOfIDs {
 		if boxID == "" {
 			continue
@@ -30,7 +29,7 @@ func part2() {
 
 		go func(currentIndex int, boxID string, listOfIDs []string) {
 			defer wg.Done()
-			boxMatch = matchBoxID(boxID, listOfIDs[currentIndex:])
+			boxMatch := matchBoxID(boxID, listOfIDs[currentIndex:])
 			if boxMatch != "" {
 				fmt.Printf("BOX 1: %v\nBOX 2: %v\n", boxID, boxMatch)
 			}
