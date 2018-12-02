@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func main() {
+func part1() {
 	// Assumes current working directory is `day-02/`!
 	fileContent, err := ioutil.ReadFile("puzzle-input.txt")
 	if err != nil {
@@ -35,8 +35,6 @@ func main() {
 				uniqueOccurence[count]++
 			}
 		}
-
-		// fmt.Printf("%v\n", uniqueOccurence)
 
 		for occurrence := range uniqueOccurence {
 			if _, ok := repeatCount[occurrence]; !ok {
