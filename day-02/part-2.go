@@ -5,12 +5,9 @@ import (
 	"io/ioutil"
 	"strings"
 	"sync"
-	"time"
 )
 
 func part2() {
-	start := time.Now()
-
 	// Assumes current working directory is `day-02/`!
 	fileContent, err := ioutil.ReadFile("puzzle-input.txt")
 	if err != nil {
@@ -37,8 +34,6 @@ func part2() {
 	}
 
 	wg.Wait()
-
-	fmt.Printf("Total time: %s\n", time.Since(start))
 }
 
 func matchBoxID(boxID string, listOfIDs []string) string {

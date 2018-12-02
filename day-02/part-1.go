@@ -4,11 +4,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
-	"time"
 )
 
 func part1() {
-	start := time.Now()
 	// Assumes current working directory is `day-02/`!
 	fileContent, err := ioutil.ReadFile("puzzle-input.txt")
 	if err != nil {
@@ -48,5 +46,4 @@ func part1() {
 	}
 
 	fmt.Printf("CHECKSUM: %v\n", repeatCount[2]*repeatCount[3])
-	fmt.Printf("Total time: %s\n", time.Since(start))
 }
