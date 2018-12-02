@@ -40,7 +40,6 @@ func main() {
 
 func calibrateFrequency(currentFrequency float64, frequencyChangeList []string, historicalFrequencyList map[float64]bool) float64 {
 	var duplicatedFrequency float64
-	recurseCounter++
 	for _, frequencyChangeString := range frequencyChangeList {
 		if frequencyChangeString == "" {
 			continue
@@ -63,6 +62,8 @@ func calibrateFrequency(currentFrequency float64, frequencyChangeList []string, 
 	}
 
 	// Only recurse if `-dupe` flag is present when running
+	recurseCounter++
+
 	if *dupePtr {
 		if duplicatedFrequency == 0.0 {
 			currentFrequency = calibrateFrequency(currentFrequency, frequencyChangeList, historicalFrequencyList)
