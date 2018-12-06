@@ -15,8 +15,8 @@ func main() {
 	switch *funcPtr {
 	case 1:
 		part1()
-		// case 2:
-		// 	part2()
+	case 2:
+		part2()
 	}
 
 	fmt.Printf("Total time: %s\n", time.Since(start))
