@@ -14,53 +14,48 @@ func part1() {
 	}
 
 	polymerUnits := strings.Split(string(fileContent), "")
+	processedUnits := processUnits(polymerUnits)
 
-	currentLength := len(polymerUnits)
-	trimmedPolymerSequence := trimPolymerSequence(polymerUnits)
-	counter := 0
-	fmt.Println("CURR: ", currentLength, ", TRIM: ", len(trimmedPolymerSequence))
-	for currentLength != len(trimmedPolymerSequence) {
-		currentLength = len(trimmedPolymerSequence)
-		trimmedPolymerSequence = trimPolymerSequence(trimmedPolymerSequence)
-		counter++
-		fmt.Println("CURR: ", currentLength, ", TRIM: ", len(trimmedPolymerSequence))
-	}
-	fmt.Println("ITER: ", counter)
-	fmt.Println(len(trimmedPolymerSequence))
-	// fmt.Println(currentPolymerSequence)
+	fmt.Println("POLYMERS: ", len(processedUnits))
 }
 
-func trimPolymerSequence(polymerSequence []string) (trimmedPolymerSequence []string) {
-	lastPolymerUnit := polymerSequence[0]
-	trimPair := false
+func processUnits(polymerUnits []string) []string {
+	index := 0
+	trimmedUnits := []string{}
 
-	for _, polymerUnit := range polymerSequence[1:] {
-		trimPair = false
-		if lastPolymerUnit == "" {
-			lastPolymerUnit = polymerUnit
+	for index < len(polymerUnits) {
+		currentUnit := polymerUnits[index]
+		if index == len(polymerUnits)-1 {
+			trimmedUnits = append(trimmedUnits, currentUnit)
+			index++
 			continue
 		}
+		nextUnit := polymerUnits[index+1]
 
-		isUpperCase := polymerUnit == strings.ToUpper(polymerUnit)
-		if isUpperCase {
-			if lastPolymerUnit == strings.ToLower(polymerUnit) {
-				trimPair = true
-			}
-		} else {
-			if lastPolymerUnit == strings.ToUpper(polymerUnit) {
-				trimPair = true
+		if currentUnit != nextUnit {
+			isCurrentUpperCase := currentUnit == strings.ToUpper(currentUnit)
+			isNextUpperCase := nextUnit == strings.ToUpper(nextUnit)
+
+			if isCurrentUpperCase && !isNextUpperCase {
+				if currentUnit == strings.ToUpper(nextUnit) {
+					index += 2
+					continue
+				}
+			} else if !isCurrentUpperCase && isNextUpperCase {
+				if currentUnit == strings.ToLower(nextUnit) {
+					index += 2
+					continue
+				}
 			}
 		}
 
-		if !trimPair {
-			trimmedPolymerSequence = append(trimmedPolymerSequence, lastPolymerUnit)
-			trimmedPolymerSequence = append(trimmedPolymerSequence, polymerUnit)
-			lastPolymerUnit = ""
-			continue
-		}
-
-		lastPolymerUnit = polymerUnit
+		trimmedUnits = append(trimmedUnits, currentUnit)
+		index++
 	}
 
-	return trimmedPolymerSequence
+	if len(polymerUnits) == len(trimmedUnits) {
+		return trimmedUnits
+	}
+
+	return processUnits(trimmedUnits)
 }
